@@ -17,7 +17,7 @@ cd maze_generator
 ```
 3. View Usage
 ```bash
-python3 maze_generator.py -h
+$ python3 maze_generator.py -h
 usage: maze_generator.py [-h] [-f FILE] [-i ITERATIONS] [-p] size
 
 This program generates mazes in a square with a given length. It can print them out to stderr or to files.

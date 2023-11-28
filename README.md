@@ -1,4 +1,4 @@
-# maze_generator
+# Python Maze Generator
 This program generates mazes in a square with a given length. It can print them out to stderr or to files.
 The only limit to the size of the maze is your computer.
 The mazes are generated with Wilson's algorithm: [https://en.wikipedia.org/wiki/Maze_generation_algorithm]

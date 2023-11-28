@@ -8,7 +8,7 @@ The mazes are generated with Wilson's algorithm: [https://en.wikipedia.org/wiki/
 ```bash
 python3 maze_generator.py 10 -i 1 -p
 ```
-<pre>
+```text
 # # # # # # # # # # #
 #   #           #   # 
 #   # # #   # # #   # 
@@ -20,13 +20,13 @@ python3 maze_generator.py 10 -i 1 -p
 #   #   #   # # #   # 
 #       #           # 
 # # # # # # # # # # # 
-</pre>
+```
 
 ### 20x20
 ```bash
 python3 maze_generator.py 20 -i 1 -p
 ```
-<pre>
+```text
 # # # # # # # # # # # # # # # # # # # # # 
 #       #   #                   #       # 
 # # #   #   #   #   #   # # # # # # #   # 
@@ -48,13 +48,13 @@ python3 maze_generator.py 20 -i 1 -p
 #   # # #   # # #   # # # # #   #   #   # 
 #       #   #                       #   # 
 # # # # # # # # # # # # # # # # # # # # #
-</pre>
+```
 
 50x50
 ```bash
 python3 maze_generator.py 50 -i 1 -p
 ```
-<pre>
+```text
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 #           #   #   #               #           #   #           #                   #               # 
 #   # # #   #   #   # # # # #   #   #   # # #   #   # # #   # # #   # # #   # # #   # # # # #   #   # 
@@ -106,4 +106,4 @@ python3 maze_generator.py 50 -i 1 -p
 #   #   #   #   # # #   #   # # # # # # #   # # #   #   # # #   # # # # # # #   # # # # #   # # # # # 
 #   #   #       #       #                           #   #               #                           # 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-</pre>
+```

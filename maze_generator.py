@@ -10,10 +10,6 @@ from tqdm import tqdm
     I'm using this to create randomly generated mazes and save them to text files
     
     Wilson's algorithm: https://en.wikipedia.org/wiki/Maze_generation_algorithm
-
-    TODO:
-    [ ] Finish algorithm
-    [ ] Receive arguments for size, iterations, output base name, starting index 
 """
 
 HALL = " "

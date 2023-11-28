@@ -8,7 +8,7 @@ The mazes are generated with Wilson's algorithm: [https://en.wikipedia.org/wiki/
 ```bash
 python3 maze_generator.py 10 -i 1 -p
 ```
-\# # # # # # # # # # # 
+\# # # # # # # # # # # \n
 \#   #           #   # 
 \#   # # #   # # #   # 
 \#           #       # 

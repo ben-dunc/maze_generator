@@ -14,20 +14,23 @@ import argparse
 class MazeGenerator:
     HALL = " "
     WALL = "#"
-    START = "S"
-    END = "E"
     _size = 31
     _maze = None
     _potential_paths = None
 
-    def generate_maze(self, size=100, seed=None):
+    def generate_maze(self, size=100, seed=None, numeric=False):
         self._rng = np.random.default_rng(seed)
 
         if size % 2 == 0:
             size += 1
 
         self._size = size
-        self._maze = np.full((self._size, self._size), [self.WALL], dtype=str)
+        
+        if numeric:
+            self.HALL=0
+            self.WALL=1
+        
+        self._maze = np.full((self._size, self._size), [self.WALL], dtype=(int if numeric else str))
 
         # assign starting point - (i, j)
         self._potential_paths = [(1, 1)]
@@ -117,7 +120,7 @@ class MazeGenerator:
         m = ""
         for i in range(self._size):
             for j in range(self._size):
-                m += self._maze[i][j] + (" " if pretty else "")
+                m += str(self._maze[i][j]) + (" " if pretty else "")
             m += "\n"
         print()
         print(m)
@@ -162,6 +165,13 @@ def main():
         action="store_true",
         help="Pretty output to stderr and files. This just adds a space between characters",
     )
+    parser.add_argument(
+        "-n",
+        "--numeric",
+        action="store_true",
+        default=False,
+        help="Whether or not the output should be numbers (WALL=1, HALL=0), rather than characters.",
+    )
 
     args = parser.parse_args()
     base_path = "./output/"
@@ -172,7 +182,7 @@ def main():
     generator = MazeGenerator()
 
     for i in range(args.iterations or 1):
-        maze = generator.generate_maze(args.size, args.seed)
+        maze = generator.generate_maze(args.size, args.seed, args.numeric)
 
         if args.file == None:
             print(f"\nMaze #{i}")

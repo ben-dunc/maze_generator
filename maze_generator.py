@@ -1,8 +1,7 @@
 import os
 import numpy as np
-import random
+import numpy.random as random
 import argparse
-from tqdm import tqdm
 
 """
     Created by Benjamin Duncan
@@ -12,32 +11,35 @@ from tqdm import tqdm
     Wilson's algorithm: https://en.wikipedia.org/wiki/Maze_generation_algorithm
 """
 
-HALL = " "
-WALL = "#"
-START = "S"
-END = "E"
-
 
 class MazeGenerator:
+    HALL = " "
+    WALL = "#"
+    START = "S"
+    END = "E"
     _size = 31
     _maze = None
     _potential_paths = None
 
-    def generate_maze(self, size=100):
+    def generate_maze(self, size=100, seed=None):
+        if seed != None:
+            random.seed(seed)
+
         if size % 2 == 0:
             size += 1
 
         self._size = size
-        self._maze = np.full((self._size, self._size), [WALL], dtype=str)
+        self._maze = np.full((self._size, self._size), [self.WALL], dtype=str)
 
         # assign starting point - (i, j)
         self._potential_paths = [(1, 1)]
-        self._maze[self._potential_paths[0][0], self._potential_paths[0][0]] = HALL
+        self._maze[self._potential_paths[0][0], self._potential_paths[0][0]] = self.HALL
         point = None
         # while there is a path in starting point
         while len(self._potential_paths) > 0:
             # verify point
-            point = random.choice(self._potential_paths)
+            r = random.randint(0, len(self._potential_paths))
+            point = self._potential_paths[r]
             self._potential_paths.remove(point)
 
             if not self._has_pot(*point):
@@ -55,32 +57,32 @@ class MazeGenerator:
 
         found_path = False
         while not found_path:
-            rand: int = random.randint(0, 3)
+            rand: int = random.randint(0, 4)
 
             if rand == 0 and i - 1 > 0 and self._is_wall(i - 1, j):  # up
                 if self._is_isolated(i - 2, j):
-                    self._maze[i - 2, j] = HALL
-                    self._maze[i - 1, j] = HALL
+                    self._maze[i - 2, j] = self.HALL
+                    self._maze[i - 1, j] = self.HALL
                     self._generate_path(i - 2, j)
                 found_path = True
             if (
                 rand == 1 and j + 1 < self._size - 1 and self._is_wall(i, j + 1)
             ):  # right
                 if self._is_isolated(i, j + 2):
-                    self._maze[i, j + 2] = HALL
-                    self._maze[i, j + 1] = HALL
+                    self._maze[i, j + 2] = self.HALL
+                    self._maze[i, j + 1] = self.HALL
                     self._generate_path(i, j + 2)
                 found_path = True
             if rand == 2 and i + 1 < self._size - 1 and self._is_wall(i + 1, j):  # down
                 if self._is_isolated(i + 2, j):
-                    self._maze[i + 2, j] = HALL
-                    self._maze[i + 1, j] = HALL
+                    self._maze[i + 2, j] = self.HALL
+                    self._maze[i + 1, j] = self.HALL
                     self._generate_path(i + 2, j)
                 found_path = True
             if rand == 3 and j - 1 > 0 and self._is_wall(i, j - 1):  # left
                 if self._is_isolated(i, j - 2):
-                    self._maze[i, j - 2] = HALL
-                    self._maze[i, j - 1] = HALL
+                    self._maze[i, j - 2] = self.HALL
+                    self._maze[i, j - 1] = self.HALL
                     self._generate_path(i, j - 2)
                 found_path = True
 
@@ -108,10 +110,10 @@ class MazeGenerator:
         )
 
     def _is_wall(self, i, j):
-        return self._maze[i][j] == WALL
+        return self._maze[i][j] == self.WALL
 
     def _is_hall(self, i, j):
-        return self._maze[i][j] == HALL
+        return self._maze[i][j] == self.HALL
 
     def print(self, pretty=True):
         m = ""
@@ -150,6 +152,13 @@ def main():
         help="The amount of mazes to generate. If a filename is specified, '_i' will be appended to it, where 'i' is the iteration number, starting with 0.",
     )
     parser.add_argument(
+        "-s",
+        "--seed",
+        action="store",
+        type=int,
+        help="The seed to use for generation.",
+    )
+    parser.add_argument(
         "-p",
         "--pretty",
         action="store_true",
@@ -165,7 +174,7 @@ def main():
     generator = MazeGenerator()
 
     for i in range(args.iterations or 1):
-        maze = generator.generate_maze(args.size)
+        maze = generator.generate_maze(args.size, args.seed)
 
         if args.file == None:
             print(f"\nMaze #{i}")

@@ -1,6 +1,5 @@
 import os
 import numpy as np
-import numpy.random as random
 import argparse
 
 """
@@ -22,8 +21,7 @@ class MazeGenerator:
     _potential_paths = None
 
     def generate_maze(self, size=100, seed=None):
-        if seed != None:
-            random.seed(seed)
+        self._rng = np.random.default_rng(seed)
 
         if size % 2 == 0:
             size += 1
@@ -38,7 +36,7 @@ class MazeGenerator:
         # while there is a path in starting point
         while len(self._potential_paths) > 0:
             # verify point
-            r = random.randint(0, len(self._potential_paths))
+            r = self._rng.integers(len(self._potential_paths))
             point = self._potential_paths[r]
             self._potential_paths.remove(point)
 
@@ -57,7 +55,7 @@ class MazeGenerator:
 
         found_path = False
         while not found_path:
-            rand: int = random.randint(0, 4)
+            rand: int = self._rng.integers(4)
 
             if rand == 0 and i - 1 > 0 and self._is_wall(i - 1, j):  # up
                 if self._is_isolated(i - 2, j):
